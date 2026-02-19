@@ -1,8 +1,11 @@
-import { Brain } from "lucide-react";
+import { Brain, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
+  const { user, role, signOut } = useAuth();
+
   return (
     <motion.nav
       initial={{ opacity: 0, y: -10 }}
@@ -19,17 +22,37 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-          <a href="#" className="hover:text-foreground transition-colors">Pricing</a>
+          <a href="#hardware" className="hover:text-foreground transition-colors">Hardware</a>
           <a href="#" className="hover:text-foreground transition-colors">Docs</a>
         </div>
 
         <div className="flex items-center gap-3">
-          <Link to="/student" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Student
-          </Link>
-          <Link to="/teacher" className="gradient-btn text-sm !px-4 !py-2">
-            Teacher Portal
-          </Link>
+          {user ? (
+            <>
+              <Link
+                to={role === "teacher" ? "/teacher" : "/student"}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={signOut}
+                className="gradient-btn-secondary text-sm !px-4 !py-2 flex items-center gap-2"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/auth" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Sign In
+              </Link>
+              <Link to="/auth" className="gradient-btn text-sm !px-4 !py-2">
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </motion.nav>
