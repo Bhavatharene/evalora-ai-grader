@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: evalora-ai-grader.lovable.app
+**URL**: https://evalora-ai-grader.lovable.app
 
 ## How can I edit this code?
 
